@@ -223,7 +223,10 @@ fun ResultsScreen(
             }
 
             // Question Aggregated Results Cards
-            itemsIndexed(questions, key = { _, item -> item.id }) { index, qResult ->
+            itemsIndexed(
+                questions,
+                key = { index, item -> "${item.orderIndex}_${item.id}_$index" }
+            ) { index, qResult ->
                 QuestionResultCard(
                     questionIndex = index + 1,
                     result = qResult
@@ -285,45 +288,43 @@ private fun QuestionResultCard(
                 .padding(18.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            // Question Title
+            // Question Header: e.g. "السؤال 1:"
             Text(
-                text = "$questionIndex. ${result.questionText}",
+                text = stringResource(R.string.question_number_format, questionIndex),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            // Question text in quotes: e.g. "هل أنت راضٍ عن معلمك؟"
+            Text(
+                text = "\"${result.questionText}\"",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,
-                lineHeight = 24.sp
+                lineHeight = 26.sp
             )
 
-            // Total responses for this question
-            Text(
-                text = "إجمالي الإجابات: ${result.totalAnswers}",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            // Bar 1: YES (Green)
+            // Option 1: YES (Green)
             AnswerBarRow(
                 label = stringResource(R.string.answer_yes),
                 dotColor = AnswerYes,
-                count = result.yesCount,
                 percentage = result.yesPercentage,
                 barColor = AnswerYes
             )
 
-            // Bar 2: MAYBE (Amber)
+            // Option 2: MAYBE (Amber)
             AnswerBarRow(
                 label = stringResource(R.string.answer_maybe),
                 dotColor = AnswerMaybe,
-                count = result.maybeCount,
                 percentage = result.maybePercentage,
                 barColor = AnswerMaybe
             )
 
-            // Bar 3: NO (Red)
+            // Option 3: NO (Red)
             AnswerBarRow(
                 label = stringResource(R.string.answer_no),
                 dotColor = AnswerNo,
-                count = result.noCount,
                 percentage = result.noPercentage,
                 barColor = AnswerNo
             )
@@ -335,7 +336,6 @@ private fun QuestionResultCard(
 private fun AnswerBarRow(
     label: String,
     dotColor: Color,
-    count: Int,
     percentage: Int,
     barColor: Color
 ) {
@@ -351,24 +351,24 @@ private fun AnswerBarRow(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     modifier = Modifier
-                        .size(12.dp)
+                        .size(10.dp)
                         .clip(CircleShape)
                         .background(dotColor)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = label,
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = stringResource(R.string.option_percentage_format, label, percentage),
+                    style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface
                 )
             }
 
             Text(
-                text = stringResource(R.string.percentage_format, count, percentage),
-                style = MaterialTheme.typography.bodyMedium,
+                text = stringResource(R.string.percentage_only_format, percentage),
+                style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
+                color = barColor
             )
         }
 

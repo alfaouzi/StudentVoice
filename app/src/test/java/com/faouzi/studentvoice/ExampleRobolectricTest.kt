@@ -33,7 +33,7 @@ class ExampleRobolectricTest {
     }
 
     @Test
-    fun `verify privacy aggregated counters calculate percentages correctly`() {
+    fun `verify privacy aggregated counters calculate percentages correctly and sum to 100 percent`() {
         val questionResult = SurveyQuestionResult(
             surveyId = 1,
             questionText = "هل أنت راضٍ عن معلمك؟",
@@ -44,12 +44,42 @@ class ExampleRobolectricTest {
         )
 
         assertEquals(28, questionResult.totalAnswers)
-        // 22 / 28 = 78.57% -> 78%
-        assertEquals(78, questionResult.yesPercentage)
+        // 22 / 28 = 78.57% -> 79% (with normal rounding and largest remainder distribution)
+        assertEquals(79, questionResult.yesPercentage)
         // 4 / 28 = 14.28% -> 14%
         assertEquals(14, questionResult.maybePercentage)
         // 2 / 28 = 7.14% -> 7%
         assertEquals(7, questionResult.noPercentage)
+
+        // Must sum to exactly 100%
+        val totalPercentage = questionResult.yesPercentage + questionResult.maybePercentage + questionResult.noPercentage
+        assertEquals(100, totalPercentage)
+    }
+
+    @Test
+    fun `verify percentages always total 100 percent for various student totals`() {
+        val cases = listOf(
+            Triple(1, 0, 0),
+            Triple(1, 1, 1),
+            Triple(2, 1, 0),
+            Triple(5, 5, 5),
+            Triple(15, 3, 2),
+            Triple(7, 2, 1),
+            Triple(10, 0, 0)
+        )
+
+        for ((yes, maybe, no) in cases) {
+            val q = SurveyQuestionResult(
+                surveyId = 1,
+                questionText = "سؤال تجريبي",
+                yesCount = yes,
+                maybeCount = maybe,
+                noCount = no,
+                orderIndex = 0
+            )
+            val sum = q.yesPercentage + q.maybePercentage + q.noPercentage
+            assertEquals("Expected sum 100 for yes=$yes, maybe=$maybe, no=$no", 100, sum)
+        }
     }
 
     @Test

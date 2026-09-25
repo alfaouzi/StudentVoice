@@ -59,6 +59,9 @@
     <string name="btn_back">رجوع</string>
     <string name="students_count_format">%1$d تلميذ</string>
     <string name="percentage_format">%1$d (%2$d%%)</string>
+    <string name="question_number_format">السؤال %1$d:</string>
+    <string name="option_percentage_format">- %1$s: %2$d%%</string>
+    <string name="percentage_only_format">%1$d%%</string>
 
     <!-- Previous Surveys Screen -->
     <string name="previous_surveys_title">الاستطلاعات السابقة</string>

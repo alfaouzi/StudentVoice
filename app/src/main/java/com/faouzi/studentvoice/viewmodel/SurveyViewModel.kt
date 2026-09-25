@@ -191,6 +191,8 @@ class SurveyViewModel(application: Application) : AndroidViewModel(application) 
             }
 
             val savedId = repository.saveCompletedSurvey(survey, questionResults)
+            val savedSurveyWithResults = repository.getSurveyById(savedId)
+            _selectedArchivedSurvey.value = savedSurveyWithResults
             _surveyState.update {
                 it.copy(
                     isSaving = false,
