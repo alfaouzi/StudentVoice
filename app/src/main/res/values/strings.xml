@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">صوت التلميذ</string>
+    <string name="app_subtitle">استطلاع آراء التلاميذ بطريقة بسيطة وسرية</string>
+    
+    <!-- Home Screen -->
+    <string name="btn_new_survey">استطلاع جديد</string>
+    <string name="btn_previous_surveys">الاستطلاعات السابقة</string>
+    <string name="btn_settings">الإعدادات</string>
+    <string name="privacy_guarantee_badge">بيانات مجهولة الهوية بالكامل وبسرية تامة</string>
+    
+    <!-- Setup Screen -->
+    <string name="setup_title">إعداد استطلاع جديد</string>
+    <string name="label_teacher_name">اسم المعلم (اختياري)</string>
+    <string name="label_class_name">القسم (اختياري)</string>
+    <string name="label_subject">المادة (اختياري)</string>
+    <string name="label_student_count">عدد التلاميذ *</string>
+    <string name="hint_student_count">أدخل عدد التلاميذ (مثال: 25)</string>
+    <string name="select_questions_title">اختيار الأسئلة</string>
+    <string name="select_questions_desc">حدد الأسئلة التي سيجيب عليها التلاميذ</string>
+    <string name="btn_start_survey">بدء الاستطلاع</string>
+    <string name="error_invalid_student_count">يرجى إدخال عدد صحيح موجب من التلاميذ أكبر من صفر</string>
+    <string name="error_no_question_selected">يرجى اختيار سؤال واحد على الأقل للمتابعة</string>
+    <string name="add_custom_question">إضافة سؤال مخصص</string>
+    <string name="custom_question_hint">اكتب السؤال هنا...</string>
+    <string name="btn_add">إضافة</string>
+
+    <!-- Default Questions -->
+    <string name="default_q1">هل أنت راضٍ عن معلمك؟</string>
+    <string name="default_q2">هل يشرح المعلم الدرس بوضوح؟</string>
+    <string name="default_q3">هل يعاملك المعلم باحترام؟</string>
+    <string name="default_q4">هل يسمح لك المعلم بطرح الأسئلة؟</string>
+    <string name="default_q5">هل يعامل المعلم التلاميذ بعدل؟</string>
+
+    <!-- Survey Execution Screen -->
+    <string name="student_session_format">التلميذ %1$d من %2$d</string>
+    <string name="question_progress_format">السؤال %1$d من %2$d</string>
+    <string name="answer_yes">نعم</string>
+    <string name="answer_maybe">إلى حد ما</string>
+    <string name="answer_no">لا</string>
+    <string name="survey_privacy_notice">إجابتك سرية ومجهولة تماماً ولا يتم حفظ اسمك</string>
+
+    <!-- Student Handover Screen -->
+    <string name="thank_you">شكرًا لك</string>
+    <string name="handover_instruction">أعطِ الهاتف للمفتش.</string>
+    <string name="btn_next_student">التلميذ التالي</string>
+    <string name="survey_finished">انتهى الاستطلاع</string>
+    <string name="btn_show_results">عرض النتائج</string>
+    <string name="all_students_completed">أكمل جميع التلاميذ الاستطلاع بنجاح.</string>
+
+    <!-- Results Screen -->
+    <string name="results_title">نتائج الاستطلاع</string>
+    <string name="teacher_label">المعلم:</string>
+    <string name="class_label">القسم:</string>
+    <string name="subject_label">المادة:</string>
+    <string name="participants_label">عدد المشاركين:</string>
+    <string name="not_specified">غير محدد</string>
+    <string name="date_label">تاريخ الاستطلاع:</string>
+    <string name="btn_back_home">العودة للرئيسية</string>
+    <string name="btn_back">رجوع</string>
+    <string name="students_count_format">%1$d تلميذ</string>
+    <string name="percentage_format">%1$d (%2$d%%)</string>
+
+    <!-- Previous Surveys Screen -->
+    <string name="previous_surveys_title">الاستطلاعات السابقة</string>
+    <string name="empty_surveys">لا توجد استطلاعات سابقة بعد</string>
+    <string name="empty_surveys_desc">عند إتمام أي استطلاع، سيتم حفظ نتائجه التجميعية هنا للرجوع إليها لاحقاً.</string>
+    <string name="btn_delete">حذف</string>
+    <string name="delete_confirm_title">حذف الاستطلاع</string>
+    <string name="delete_confirm_desc">هل أنت متأكد من حذف نتائج هذا الاستطلاع؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="cancel">إلغاء</string>
+    <string name="confirm">تأكيد الحذف</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">الإعدادات</string>
+    <string name="about_app_title">حول التطبيق</string>
+    <string name="about_app_desc">صوت التلميذ هو أداة تربوية مبسطة ومستقلة لمفتشي التعليم لجمع آراء التلاميذ حول الأستاذ بسرية تامة ودون أي تأثير خارجي.</string>
+    <string name="privacy_title">الخصوصية والسرية المطلقة</string>
+    <string name="privacy_desc">تم تصميم هذا التطبيق لضمان سرية إجابات التلاميذ بنسبة 100%%. لا يقوم التطبيق بتسجيل أسماء التلاميذ، أرقامهم، هوياتهم، أو إجابات كل تلميذ على حدة. يتم حفظ العدادات التجميعية فقط لكل سؤال.</string>
+    <string name="offline_title">يعمل بدون إنترنت</string>
+    <string name="offline_desc">التطبيق يعمل محلياً بالكامل على جهازك دون الحاجة إلى أي اتصال بالإنترنت أو إنشاء حسابات.</string>
+    <string name="version_title">الإصدار</string>
+    <string name="version_value">1.0.0 (MVP)</string>
+</resources>
