@@ -1,5 +1,5 @@
 {
-  "name": "Student Voice",
+  "name": "صوت التلميذ",
   "description": "صوت التلميذ - استطلاع آراء التلاميذ بطريقة بسيطة وسرية. أداة خاصة للمفتشين لجمع التقييمات التجميعية دون تسجيل أي بيانات شخصية.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

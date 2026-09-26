@@ -67,7 +67,7 @@ fun ResultsScreen(
     onBackHome: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val dateFormat = SimpleDateFormat("yyyy/MM/dd - HH:mm", Locale("ar"))
+    val dateFormat = SimpleDateFormat("yyyy/MM/dd - HH:mm", Locale.ENGLISH)
     val formattedDate = dateFormat.format(Date(survey.dateCompleted))
 
     Scaffold(

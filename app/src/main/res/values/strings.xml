@@ -5,7 +5,7 @@
     <!-- Home Screen -->
     <string name="btn_new_survey">استطلاع جديد</string>
     <string name="btn_previous_surveys">الاستطلاعات السابقة</string>
-    <string name="btn_settings">الإعدادات</string>
+    <string name="btn_settings">معلومات التطبيق</string>
     <string name="privacy_guarantee_badge">بيانات مجهولة الهوية بالكامل وبسرية تامة</string>
     
     <!-- Setup Screen -->
@@ -43,6 +43,7 @@
     <string name="thank_you">شكرًا لك</string>
     <string name="handover_instruction">أعطِ الهاتف للمفتش.</string>
     <string name="btn_next_student">التلميذ التالي</string>
+    <string name="hold_to_proceed_hint">اضغط مطولاً للمتابعة</string>
     <string name="survey_finished">انتهى الاستطلاع</string>
     <string name="btn_show_results">عرض النتائج</string>
     <string name="all_students_completed">أكمل جميع التلاميذ الاستطلاع بنجاح.</string>
@@ -74,7 +75,7 @@
     <string name="confirm">تأكيد الحذف</string>
 
     <!-- Settings Screen -->
-    <string name="settings_title">الإعدادات</string>
+    <string name="settings_title">معلومات التطبيق</string>
     <string name="about_app_title">حول التطبيق</string>
     <string name="about_app_desc">صوت التلميذ هو أداة تربوية مبسطة ومستقلة لمفتشي التعليم لجمع آراء التلاميذ حول الأستاذ بسرية تامة ودون أي تأثير خارجي.</string>
     <string name="privacy_title">الخصوصية والسرية المطلقة</string>

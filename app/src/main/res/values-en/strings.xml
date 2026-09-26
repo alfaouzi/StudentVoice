@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">Student Voice</string>
+    <string name="app_name">صوت التلميذ</string>
+    <string name="btn_settings">معلومات التطبيق</string>
+    <string name="settings_title">معلومات التطبيق</string>
     <string name="question_number_format">Question %1$d:</string>
     <string name="option_percentage_format">- %1$s: %2$d%%</string>
     <string name="percentage_only_format">%1$d%%</string>
+    <string name="hold_to_proceed_hint">Press and hold to proceed</string>
 </resources>

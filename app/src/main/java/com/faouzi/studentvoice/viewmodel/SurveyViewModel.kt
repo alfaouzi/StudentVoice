@@ -47,8 +47,27 @@ data class OngoingSurveyState(
     val currentQuestionIndex: Int = 0,
     val activeQuestions: List<ActiveQuestionState> = emptyList(),
     val savedSurveyId: Long? = null,
-    val isSaving: Boolean = false
+    val isSaving: Boolean = false,
+    val currentStudentOptionsOrder: List<AnswerOption> = defaultOptionsOrder()
 ) {
+    companion object {
+        fun defaultOptionsOrder(): List<AnswerOption> =
+            listOf(AnswerOption.YES, AnswerOption.MAYBE, AnswerOption.NO)
+
+        fun generateRandomOptionsOrder(previousOrder: List<AnswerOption>? = null): List<AnswerOption> {
+            val base = listOf(AnswerOption.YES, AnswerOption.MAYBE, AnswerOption.NO)
+            var shuffled = base.shuffled()
+            if (previousOrder != null && previousOrder.size > 1) {
+                var attempts = 0
+                while (shuffled == previousOrder && attempts < 10) {
+                    shuffled = base.shuffled()
+                    attempts++
+                }
+            }
+            return shuffled
+        }
+    }
+
     val currentQuestion: ActiveQuestionState?
         get() = activeQuestions.getOrNull(currentQuestionIndex)
 
@@ -111,7 +130,8 @@ class SurveyViewModel(application: Application) : AndroidViewModel(application) 
             currentStudentNumber = 1,
             currentQuestionIndex = 0,
             activeQuestions = activeQuestions,
-            savedSurveyId = null
+            savedSurveyId = null,
+            currentStudentOptionsOrder = OngoingSurveyState.generateRandomOptionsOrder()
         )
     }
 
@@ -150,11 +170,13 @@ class SurveyViewModel(application: Application) : AndroidViewModel(application) 
     fun proceedToNextStudent() {
         val current = _surveyState.value
         if (current.currentStudentNumber < current.totalStudents) {
+            val newOrder = OngoingSurveyState.generateRandomOptionsOrder(current.currentStudentOptionsOrder)
             _surveyState.update {
                 it.copy(
                     phase = SurveyPhase.STUDENT_ANSWERING,
                     currentStudentNumber = it.currentStudentNumber + 1,
-                    currentQuestionIndex = 0
+                    currentQuestionIndex = 0,
+                    currentStudentOptionsOrder = newOrder
                 )
             }
         } else {

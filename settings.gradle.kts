@@ -22,6 +22,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "Student Voice"
+rootProject.name = "صوت التلميذ"
 
 include(":app")

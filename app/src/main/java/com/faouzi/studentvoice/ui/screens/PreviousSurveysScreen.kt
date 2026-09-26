@@ -73,7 +73,7 @@ fun PreviousSurveysScreen(
     modifier: Modifier = Modifier
 ) {
     var surveyToDelete by remember { mutableStateOf<SurveyWithResults?>(null) }
-    val dateFormat = remember { SimpleDateFormat("yyyy/MM/dd", Locale("ar")) }
+    val dateFormat = remember { SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH) }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
