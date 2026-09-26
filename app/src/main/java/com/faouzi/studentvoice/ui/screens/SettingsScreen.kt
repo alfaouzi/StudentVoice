@@ -104,6 +104,33 @@ fun SettingsScreen(
                 description = stringResource(R.string.offline_desc)
             )
 
+            // Developer Card
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("developer_card"),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(18.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "المطور: ل.فوزي",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
+
             // Version Card
             Card(
                 modifier = Modifier.fillMaxWidth(),

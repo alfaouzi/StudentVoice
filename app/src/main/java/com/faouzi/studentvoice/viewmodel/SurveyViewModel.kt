@@ -8,6 +8,7 @@ import com.faouzi.studentvoice.data.local.Survey
 import com.faouzi.studentvoice.data.local.SurveyQuestionResult
 import com.faouzi.studentvoice.data.local.SurveyRepository
 import com.faouzi.studentvoice.data.local.SurveyWithResults
+import com.faouzi.studentvoice.util.SoundFeedbackHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -104,6 +105,9 @@ class SurveyViewModel(application: Application) : AndroidViewModel(application) 
     private val _selectedArchivedSurvey = MutableStateFlow<SurveyWithResults?>(null)
     val selectedArchivedSurvey: StateFlow<SurveyWithResults?> = _selectedArchivedSurvey.asStateFlow()
 
+    // Guard ensuring the completion beep plays exactly once per completed student
+    private var lastSoundPlayedStudentNumber: Int = -1
+
     fun startNewSurvey(
         teacherName: String,
         className: String,
@@ -111,6 +115,7 @@ class SurveyViewModel(application: Application) : AndroidViewModel(application) 
         studentCount: Int,
         questions: List<String>
     ) {
+        lastSoundPlayedStudentNumber = -1
         val activeQuestions = questions.mapIndexed { index, text ->
             ActiveQuestionState(
                 questionText = text,
@@ -149,6 +154,13 @@ class SurveyViewModel(application: Application) : AndroidViewModel(application) 
         }
 
         if (current.isLastQuestionForStudent) {
+            // Guarded: play one short gentle beep exactly once when this student completes the last question
+            val studentNum = current.currentStudentNumber
+            if (lastSoundPlayedStudentNumber != studentNum) {
+                lastSoundPlayedStudentNumber = studentNum
+                SoundFeedbackHelper.playCompletionSound(getApplication())
+            }
+
             // Last question for this student -> go to Handover screen
             if (current.isLastStudent) {
                 _surveyState.update {
@@ -246,6 +258,7 @@ class SurveyViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun resetSurvey() {
+        lastSoundPlayedStudentNumber = -1
         _surveyState.value = OngoingSurveyState()
     }
 }

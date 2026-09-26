@@ -75,21 +75,18 @@ fun HomeScreen(
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // App Logo Image (Attached original design without alteration)
-                Surface(
-                    shape = RoundedCornerShape(24.dp),
-                    color = Color.White,
-                    shadowElevation = 2.dp,
+                // App Logo Image (Original attached image displayed with rounded corners container)
+                Box(
                     modifier = Modifier
                         .padding(top = 8.dp, bottom = 16.dp)
-                        .testTag("app_logo")
+                        .clip(RoundedCornerShape(16.dp))
+                        .testTag("app_logo"),
+                    contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.student_voice_logo_1790424013632),
+                        painter = painterResource(id = R.drawable.student_voice),
                         contentDescription = stringResource(R.string.app_name),
-                        modifier = Modifier
-                            .size(210.dp)
-                            .padding(12.dp),
+                        modifier = Modifier.size(210.dp),
                         contentScale = ContentScale.Fit
                     )
                 }

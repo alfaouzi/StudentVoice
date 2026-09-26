@@ -264,5 +264,35 @@ class ExampleRobolectricTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         // Should execute gracefully without throwing an exception even in test JVM without audio output
         SoundFeedbackHelper.playCompletionSound(context)
+        SoundFeedbackHelper.playCompletionSound()
+    }
+
+    @Test
+    fun `verify viewModel triggers guarded completion on final answer without crashing`() {
+        val app = ApplicationProvider.getApplicationContext<android.app.Application>()
+        val viewModel = com.faouzi.studentvoice.viewmodel.SurveyViewModel(app)
+        viewModel.startNewSurvey("الأستاذ", "القسم 1", "الرياضيات", 2, listOf("سؤال 1", "سؤال 2"))
+
+        // Question 1: answering should not complete student
+        viewModel.recordAnswer(AnswerOption.YES)
+        assertEquals(SurveyPhase.STUDENT_ANSWERING, viewModel.surveyState.value.phase)
+        assertEquals(1, viewModel.surveyState.value.currentQuestionIndex)
+
+        // Question 2 (Last question for student 1): answering transitions to STUDENT_COMPLETED
+        viewModel.recordAnswer(AnswerOption.YES)
+        assertEquals(SurveyPhase.STUDENT_COMPLETED, viewModel.surveyState.value.phase)
+
+        // Proceed to next student (no sound played)
+        viewModel.proceedToNextStudent()
+        assertEquals(SurveyPhase.STUDENT_ANSWERING, viewModel.surveyState.value.phase)
+        assertEquals(2, viewModel.surveyState.value.currentStudentNumber)
+
+        // Student 2 Question 1
+        viewModel.recordAnswer(AnswerOption.NO)
+        assertEquals(SurveyPhase.STUDENT_ANSWERING, viewModel.surveyState.value.phase)
+
+        // Student 2 Question 2 (Last question for final student) -> transitions to SURVEY_COMPLETED
+        viewModel.recordAnswer(AnswerOption.YES)
+        assertEquals(SurveyPhase.SURVEY_COMPLETED, viewModel.surveyState.value.phase)
     }
 }

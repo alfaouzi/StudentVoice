@@ -2,43 +2,33 @@ package com.faouzi.studentvoice.util
 
 import android.content.Context
 import android.media.AudioManager
-import android.media.RingtoneManager
 import android.media.ToneGenerator
 
 object SoundFeedbackHelper {
     /**
-     * Plays one short, distinctive notification sound for the inspector
-     * when a student finishes answering all questions.
+     * Plays one short, gentle beep (approx 120ms) at a comfortable low volume
+     * when a student finishes answering the final question.
+     * Uses Android's built-in ToneGenerator.
      * Fails silently and gracefully if the device is muted or sound is unavailable.
      */
-    fun playCompletionSound(context: Context) {
-        // Attempt 1: Default Android Notification Ringtone
+    fun playCompletionSound(context: Context? = null) {
         try {
-            val notificationUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-            if (notificationUri != null) {
-                val ringtone = RingtoneManager.getRingtone(context.applicationContext, notificationUri)
-                if (ringtone != null) {
-                    ringtone.play()
-                    return
-                }
-            }
-        } catch (_: Throwable) {
-            // Fall through to ToneGenerator
-        }
-
-        // Attempt 2: Built-in ToneGenerator (standard alert beep)
-        try {
-            val toneGenerator = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 80)
-            toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, 200)
-            Thread {
+            // Low, comfortable volume (40 out of 100)
+            val toneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 40)
+            // TONE_PROP_BEEP: standard gentle beep, 120ms duration (approx 100–150ms)
+            toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, 120)
+            val releaseThread = Thread {
                 try {
-                    Thread.sleep(300)
+                    Thread.sleep(250)
                     toneGenerator.release()
                 } catch (_: Throwable) {
                 }
-            }.start()
+            }
+            releaseThread.isDaemon = true
+            releaseThread.start()
         } catch (_: Throwable) {
-            // Silently ignore if audio subsystem is unavailable or muted
+            // Silently ignore if audio subsystem is unavailable, muted, or in headless test environment
         }
     }
 }
+

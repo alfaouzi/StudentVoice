@@ -57,7 +57,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -68,7 +67,6 @@ import com.faouzi.studentvoice.R
 import com.faouzi.studentvoice.ui.theme.AnswerMaybe
 import com.faouzi.studentvoice.ui.theme.AnswerNo
 import com.faouzi.studentvoice.ui.theme.AnswerYes
-import com.faouzi.studentvoice.util.SoundFeedbackHelper
 import com.faouzi.studentvoice.viewmodel.AnswerOption
 import com.faouzi.studentvoice.viewmodel.OngoingSurveyState
 import com.faouzi.studentvoice.viewmodel.SurveyPhase
@@ -308,11 +306,6 @@ private fun StudentCompletedHandoverContent(
     surveyState: OngoingSurveyState,
     onNextStudent: () -> Unit
 ) {
-    val context = LocalContext.current
-    LaunchedEffect(surveyState.currentStudentNumber) {
-        SoundFeedbackHelper.playCompletionSound(context)
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -410,11 +403,6 @@ private fun SurveyFinishedContent(
     surveyState: OngoingSurveyState,
     onShowResults: () -> Unit
 ) {
-    val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        SoundFeedbackHelper.playCompletionSound(context)
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
