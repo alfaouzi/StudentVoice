@@ -9,6 +9,7 @@ import com.faouzi.studentvoice.data.local.SurveyQuestionResult
 import com.faouzi.studentvoice.data.local.SurveyRepository
 import com.faouzi.studentvoice.data.local.SurveyWithResults
 import com.faouzi.studentvoice.util.SoundFeedbackHelper
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -82,14 +83,10 @@ data class OngoingSurveyState(
         get() = currentQuestionIndex >= (totalQuestions - 1)
 }
 
-class SurveyViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository: SurveyRepository
-
-    init {
-        val db = AppDatabase.getInstance(application)
-        repository = SurveyRepository(db.surveyDao())
-    }
+class SurveyViewModel @JvmOverloads constructor(
+    application: Application,
+    private val repository: SurveyRepository = SurveyRepository(AppDatabase.getInstance(application).surveyDao())
+) : AndroidViewModel(application) {
 
     val allSurveys: StateFlow<List<SurveyWithResults>> = repository.allSurveys
         .stateIn(
@@ -205,35 +202,43 @@ class SurveyViewModel(application: Application) : AndroidViewModel(application) 
         _surveyState.update { it.copy(isSaving = true) }
 
         viewModelScope.launch {
-            val survey = Survey(
-                teacherName = current.teacherName,
-                className = current.className,
-                subject = current.subject,
-                studentCount = current.totalStudents,
-                dateCreated = System.currentTimeMillis(),
-                dateCompleted = System.currentTimeMillis()
-            )
-
-            val questionResults = current.activeQuestions.map { q ->
-                SurveyQuestionResult(
-                    questionText = q.questionText,
-                    yesCount = q.yesCount,
-                    maybeCount = q.maybeCount,
-                    noCount = q.noCount,
-                    orderIndex = q.orderIndex
+            try {
+                val survey = Survey(
+                    teacherName = current.teacherName,
+                    className = current.className,
+                    subject = current.subject,
+                    studentCount = current.totalStudents,
+                    dateCreated = System.currentTimeMillis(),
+                    dateCompleted = System.currentTimeMillis()
                 )
-            }
 
-            val savedId = repository.saveCompletedSurvey(survey, questionResults)
-            val savedSurveyWithResults = repository.getSurveyById(savedId)
-            _selectedArchivedSurvey.value = savedSurveyWithResults
-            _surveyState.update {
-                it.copy(
-                    isSaving = false,
-                    savedSurveyId = savedId
-                )
+                val questionResults = current.activeQuestions.map { q ->
+                    SurveyQuestionResult(
+                        questionText = q.questionText,
+                        yesCount = q.yesCount,
+                        maybeCount = q.maybeCount,
+                        noCount = q.noCount,
+                        orderIndex = q.orderIndex
+                    )
+                }
+
+                val savedId = repository.saveCompletedSurvey(survey, questionResults)
+                val savedSurveyWithResults = repository.getSurveyById(savedId)
+                _selectedArchivedSurvey.value = savedSurveyWithResults
+                _surveyState.update {
+                    it.copy(
+                        savedSurveyId = savedId
+                    )
+                }
+                onSaved(savedId)
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                android.util.Log.e("SurveyViewModel", "Failed to save completed survey", e)
+            } finally {
+                _surveyState.update {
+                    it.copy(isSaving = false)
+                }
             }
-            onSaved(savedId)
         }
     }
 

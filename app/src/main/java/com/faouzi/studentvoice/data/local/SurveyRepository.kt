@@ -10,12 +10,7 @@ class SurveyRepository(private val surveyDao: SurveyDao) {
         survey: Survey,
         questionResults: List<SurveyQuestionResult>
     ): Long {
-        val surveyId = surveyDao.insertSurvey(survey)
-        val linkedResults = questionResults.map { result ->
-            result.copy(surveyId = surveyId)
-        }
-        surveyDao.insertQuestionResults(linkedResults)
-        return surveyId
+        return surveyDao.insertSurveyWithResults(survey, questionResults)
     }
 
     suspend fun getSurveyById(surveyId: Long): SurveyWithResults? {

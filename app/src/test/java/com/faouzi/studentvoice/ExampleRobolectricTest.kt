@@ -2,17 +2,28 @@ package com.faouzi.studentvoice
 
 import android.content.Context
 import android.content.res.Configuration
+import androidx.room.Room
+import androidx.room.withTransaction
 import androidx.test.core.app.ApplicationProvider
+import com.faouzi.studentvoice.data.local.AppDatabase
 import com.faouzi.studentvoice.data.local.Survey
+import com.faouzi.studentvoice.data.local.SurveyDao
 import com.faouzi.studentvoice.data.local.SurveyQuestionResult
+import com.faouzi.studentvoice.data.local.SurveyRepository
+import com.faouzi.studentvoice.data.local.SurveyWithResults
 import com.faouzi.studentvoice.util.SoundFeedbackHelper
 import com.faouzi.studentvoice.viewmodel.ActiveQuestionState
 import com.faouzi.studentvoice.viewmodel.AnswerOption
 import com.faouzi.studentvoice.viewmodel.OngoingSurveyState
 import com.faouzi.studentvoice.viewmodel.SurveyPhase
+import com.faouzi.studentvoice.viewmodel.SurveyViewModel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -294,5 +305,166 @@ class ExampleRobolectricTest {
         // Student 2 Question 2 (Last question for final student) -> transitions to SURVEY_COMPLETED
         viewModel.recordAnswer(AnswerOption.YES)
         assertEquals(SurveyPhase.SURVEY_COMPLETED, viewModel.surveyState.value.phase)
+    }
+
+    @Test
+    fun `verify saveCompletedSurvey atomic transaction saves survey and questions successfully`() = runBlocking {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+            .allowMainThreadQueries()
+            .build()
+        val dao = db.surveyDao()
+        val repository = SurveyRepository(dao)
+
+        val survey = Survey(
+            teacherName = "الأستاذ أحمد",
+            className = "الصف الرابع",
+            subject = "اللغة العربية",
+            studentCount = 25
+        )
+        val questions = listOf(
+            SurveyQuestionResult(
+                questionText = "هل تفهم الدرس جيداً؟",
+                yesCount = 20,
+                maybeCount = 3,
+                noCount = 2,
+                orderIndex = 0
+            ),
+            SurveyQuestionResult(
+                questionText = "هل الأنشطة ممتعة؟",
+                yesCount = 18,
+                maybeCount = 5,
+                noCount = 2,
+                orderIndex = 1
+            )
+        )
+
+        val savedId = repository.saveCompletedSurvey(survey, questions)
+        assertTrue("Saved ID should be positive", savedId > 0)
+
+        val retrieved = repository.getSurveyById(savedId)
+        assertNotNull("Saved survey should be retrievable", retrieved)
+        assertEquals("الأستاذ أحمد", retrieved!!.survey.teacherName)
+        assertEquals("الصف الرابع", retrieved.survey.className)
+        assertEquals(25, retrieved.survey.studentCount)
+        assertEquals(2, retrieved.questions.size)
+        assertEquals(savedId, retrieved.questions[0].surveyId)
+        assertEquals(savedId, retrieved.questions[1].surveyId)
+        assertEquals("هل تفهم الدرس جيداً؟", retrieved.questions[0].questionText)
+        assertEquals("هل الأنشطة ممتعة؟", retrieved.questions[1].questionText)
+
+        db.close()
+    }
+
+    @Test
+    fun `verify transaction rollback leaves no partial survey if question insert fails`() = runBlocking {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+            .allowMainThreadQueries()
+            .build()
+        val dao = db.surveyDao()
+
+        // Verify initial state is empty
+        val initialSurveys = dao.getAllSurveysWithResults().first()
+        assertEquals(0, initialSurveys.size)
+
+        // Run a transaction that inserts a survey but fails before completion
+        try {
+            db.withTransaction {
+                dao.insertSurvey(
+                    Survey(
+                        teacherName = "فشل المعلم",
+                        className = "قسم 1",
+                        subject = "علوم",
+                        studentCount = 10
+                    )
+                )
+                // Simulate an unexpected disk/constraint failure midway
+                throw IllegalStateException("Simulated crash mid-save")
+            }
+        } catch (e: IllegalStateException) {
+            // Expected failure
+        }
+
+        // Verify that the survey record was rolled back and NOT partially saved
+        val surveysAfterRollback = dao.getAllSurveysWithResults().first()
+        assertEquals("Survey must be rolled back completely on error", 0, surveysAfterRollback.size)
+
+        db.close()
+    }
+
+    @Test
+    fun `verify SurveyViewModel completeAndSaveSurvey resets isSaving and handles errors gracefully`() = runBlocking {
+        val app = ApplicationProvider.getApplicationContext<android.app.Application>()
+
+        // 1. Test failing repository: isSaving must be reset to false and onSaved must NOT be called
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+            .allowMainThreadQueries()
+            .build()
+
+        val failingDao = object : SurveyDao by db.surveyDao() {
+            override suspend fun insertSurveyWithResults(
+                survey: Survey,
+                questionResults: List<SurveyQuestionResult>
+            ): Long {
+                throw RuntimeException("Simulated database failure")
+            }
+        }
+        val failingRepo = SurveyRepository(failingDao)
+        val failingViewModel = SurveyViewModel(app, failingRepo)
+
+        failingViewModel.startNewSurvey("أستاذ", "قسم", "مادة", 1, listOf("سؤال 1"))
+        failingViewModel.recordAnswer(AnswerOption.YES)
+
+        var navigationCallbackCalled = false
+        failingViewModel.completeAndSaveSurvey {
+            navigationCallbackCalled = true
+        }
+
+        org.robolectric.shadows.ShadowLooper.idleMainLooper()
+
+        // Assertions for failure scenario
+        assertFalse("Navigation callback must NOT be called when save fails", navigationCallbackCalled)
+        assertFalse("isSaving must be reset to false even when save fails", failingViewModel.surveyState.value.isSaving)
+        assertNull("savedSurveyId should remain null on failure", failingViewModel.surveyState.value.savedSurveyId)
+
+        // 2. Test successful repository: isSaving is reset to false and onSaved IS called
+        val successDao = object : SurveyDao by db.surveyDao() {
+            override suspend fun insertSurveyWithResults(
+                survey: Survey,
+                questionResults: List<SurveyQuestionResult>
+            ): Long {
+                return 42L
+            }
+
+            override suspend fun getSurveyWithResultsById(surveyId: Long): SurveyWithResults {
+                return SurveyWithResults(
+                    survey = Survey(id = 42L, teacherName = "أستاذ ناجح", studentCount = 1),
+                    questions = emptyList()
+                )
+            }
+        }
+        val successRepo = SurveyRepository(successDao)
+        val successViewModel = SurveyViewModel(app, successRepo)
+
+        successViewModel.startNewSurvey("أستاذ ناجح", "قسم 2", "مادة 2", 1, listOf("سؤال 1"))
+        successViewModel.recordAnswer(AnswerOption.YES)
+
+        var successCallbackCalled = false
+        var savedIdResult: Long? = null
+        successViewModel.completeAndSaveSurvey { id ->
+            successCallbackCalled = true
+            savedIdResult = id
+        }
+
+        org.robolectric.shadows.ShadowLooper.idleMainLooper()
+
+        assertTrue("Navigation callback must be called when save succeeds", successCallbackCalled)
+        assertEquals(42L, savedIdResult)
+        assertFalse("isSaving must be reset to false after successful save", successViewModel.surveyState.value.isSaving)
+        assertEquals(42L, successViewModel.surveyState.value.savedSurveyId)
+
+        db.close()
     }
 }

@@ -17,6 +17,19 @@ interface SurveyDao {
     suspend fun insertQuestionResults(results: List<SurveyQuestionResult>)
 
     @Transaction
+    suspend fun insertSurveyWithResults(
+        survey: Survey,
+        questionResults: List<SurveyQuestionResult>
+    ): Long {
+        val surveyId = insertSurvey(survey)
+        val linkedResults = questionResults.map { result ->
+            result.copy(surveyId = surveyId)
+        }
+        insertQuestionResults(linkedResults)
+        return surveyId
+    }
+
+    @Transaction
     @Query("SELECT * FROM surveys ORDER BY dateCompleted DESC")
     fun getAllSurveysWithResults(): Flow<List<SurveyWithResults>>
 
