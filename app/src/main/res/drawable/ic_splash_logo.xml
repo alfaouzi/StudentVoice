@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Base card surface in pure white matching the logo background -->
+    <item
+        android:width="100dp"
+        android:height="100dp"
+        android:gravity="center">
+        <shape android:shape="rectangle">
+            <corners android:radius="18dp" />
+            <solid android:color="@color/white" />
+        </shape>
+    </item>
+
+    <!-- Original logo image itself, completely unchanged -->
+    <item
+        android:width="100dp"
+        android:height="100dp"
+        android:gravity="center"
+        android:drawable="@drawable/student_voice" />
+
+    <!-- Corner mask overlay: smoothly covers sharp corners with splash_background -->
+    <item
+        android:width="100dp"
+        android:height="100dp"
+        android:gravity="center"
+        android:drawable="@drawable/ic_rounded_corner_mask" />
+
+    <!-- Subtle, tasteful rounded border complementing the blue/teal identity -->
+    <item
+        android:width="100dp"
+        android:height="100dp"
+        android:gravity="center">
+        <shape android:shape="rectangle">
+            <corners android:radius="18dp" />
+            <stroke
+                android:width="1.5dp"
+                android:color="@color/splash_border" />
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+</layer-list>
