@@ -6,7 +6,7 @@
     <string name="btn_new_survey">استطلاع جديد</string>
     <string name="btn_previous_surveys">الاستطلاعات السابقة</string>
     <string name="btn_settings">معلومات التطبيق</string>
-    <string name="privacy_guarantee_badge">بيانات مجهولة الهوية بالكامل وبسرية تامة</string>
+    <string name="privacy_guarantee_badge">لا يتم تسجيل هوية التلميذ، وتُحفظ النتائج على شكل بيانات تجميعية فقط</string>
     
     <!-- Setup Screen -->
     <string name="setup_title">إعداد استطلاع جديد</string>
@@ -37,7 +37,7 @@
     <string name="answer_yes">نعم</string>
     <string name="answer_maybe">إلى حد ما</string>
     <string name="answer_no">لا</string>
-    <string name="survey_privacy_notice">إجابتك سرية ومجهولة تماماً ولا يتم حفظ اسمك</string>
+    <string name="survey_privacy_notice">لا يتم تسجيل هوية التلميذ أو إجاباته على حدة، وتُحفظ النتائج كبيانات تجميعية فقط</string>
 
     <!-- Student Handover Screen -->
     <string name="thank_you">شكرًا لك</string>
@@ -77,9 +77,9 @@
     <!-- Settings Screen -->
     <string name="settings_title">معلومات التطبيق</string>
     <string name="about_app_title">حول التطبيق</string>
-    <string name="about_app_desc">صوت التلميذ هو أداة تربوية مبسطة ومستقلة لمفتشي التعليم لجمع آراء التلاميذ حول الأستاذ بسرية تامة ودون أي تأثير خارجي.</string>
-    <string name="privacy_title">الخصوصية والسرية المطلقة</string>
-    <string name="privacy_desc">تم تصميم هذا التطبيق لضمان سرية إجابات التلاميذ بنسبة 100%%. لا يقوم التطبيق بتسجيل أسماء التلاميذ، أرقامهم، هوياتهم، أو إجابات كل تلميذ على حدة. يتم حفظ العدادات التجميعية فقط لكل سؤال.</string>
+    <string name="about_app_desc">صوت التلميذ هو أداة تربوية مبسطة ومستقلة لمفتشي التعليم لجمع آراء التلاميذ حول الأستاذ دون تسجيل هوياتهم، وتُحفظ النتائج كبيانات تجميعية فقط دون أي تأثير خارجي.</string>
+    <string name="privacy_title">خصوصية إجابات التلاميذ</string>
+    <string name="privacy_desc">لا يتم تسجيل هوية التلميذ أو إجابات كل تلميذ على حدة، وتُحفظ النتائج على شكل بيانات تجميعية فقط.</string>
     <string name="offline_title">يعمل بدون إنترنت</string>
     <string name="offline_desc">التطبيق يعمل محلياً بالكامل على جهازك دون الحاجة إلى أي اتصال بالإنترنت أو إنشاء حسابات.</string>
     <string name="version_title">الإصدار</string>
