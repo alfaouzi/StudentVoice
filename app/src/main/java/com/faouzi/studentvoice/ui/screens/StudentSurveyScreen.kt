@@ -13,6 +13,7 @@ import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -461,62 +462,105 @@ private fun SurveyFinishedContent(
             )
         }
 
-        // Bottom: Show Results Button
-        Button(
-            onClick = onShowResults,
-            enabled = !surveyState.isSaving,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .testTag("show_results_button"),
-            shape = RoundedCornerShape(18.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
+        // Bottom: Show Results Button (Inspector controlled: require ~1s long press)
+        var resultsTriggered by remember { mutableStateOf(false) }
+
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (surveyState.isSaving) {
-                CircularProgressIndicator(
-                    color = Color.White,
-                    modifier = Modifier.size(26.dp)
-                )
-            } else {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Visibility,
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp)
+            HoldToProceedButton(
+                onHoldComplete = {
+                    if (!resultsTriggered && !surveyState.isSaving) {
+                        resultsTriggered = true
+                        onShowResults()
+                    }
+                },
+                enabled = !surveyState.isSaving && !resultsTriggered,
+                testTag = "show_results_button",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+            ) {
+                if (surveyState.isSaving) {
+                    CircularProgressIndicator(
+                        color = Color.White,
+                        modifier = Modifier.size(26.dp)
                     )
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Text(
-                        text = stringResource(R.string.btn_show_results),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
+                } else {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Visibility,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(24.dp)
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            text = stringResource(R.string.btn_show_results),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
                 }
             }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.hold_to_proceed_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.75f),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
 
 /**
- * Button requiring a short long-press (~1 second) to advance to the next student.
- * Normal taps do not trigger transition. Displays progress while holding.
+ * Button requiring a deliberate long-press (~1 second) to proceed.
+ * Normal taps do not trigger transition. Displays progress feedback while holding.
+ * Reused for both advancing to next student and showing final survey results.
  */
 @Composable
 fun HoldToProceedButton(
     onHoldComplete: () -> Unit,
     modifier: Modifier = Modifier,
-    holdDurationMs: Long = 1000L
+    holdDurationMs: Long = 1000L,
+    enabled: Boolean = true,
+    testTag: String = "next_student_button",
+    content: @Composable BoxScope.() -> Unit = {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.btn_next_student),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
 ) {
     val progress = remember { Animatable(0f) }
     var isPressed by remember { mutableStateOf(false) }
+    var hasFired by remember { mutableStateOf(false) }
     val currentOnHoldComplete by rememberUpdatedState(onHoldComplete)
 
-    LaunchedEffect(isPressed) {
-        if (isPressed) {
+    LaunchedEffect(isPressed, enabled) {
+        if (isPressed && enabled && !hasFired) {
             var completed = false
             try {
                 progress.animateTo(
@@ -526,8 +570,9 @@ fun HoldToProceedButton(
                         easing = LinearEasing
                     )
                 )
-                if (progress.value >= 1f) {
+                if (progress.value >= 1f && !hasFired) {
                     completed = true
+                    hasFired = true
                     currentOnHoldComplete()
                 }
             } finally {
@@ -540,21 +585,27 @@ fun HoldToProceedButton(
         }
     }
 
+    val gestureModifier = if (enabled && !hasFired) {
+        Modifier.pointerInput(enabled, hasFired) {
+            awaitEachGesture {
+                awaitFirstDown(requireUnconsumed = false)
+                isPressed = true
+                waitForUpOrCancellation()
+                isPressed = false
+            }
+        }
+    } else {
+        Modifier
+    }
+
     Surface(
         modifier = modifier
             .clip(RoundedCornerShape(18.dp))
-            .pointerInput(Unit) {
-                awaitEachGesture {
-                    awaitFirstDown(requireUnconsumed = false)
-                    isPressed = true
-                    waitForUpOrCancellation()
-                    isPressed = false
-                }
-            }
-            .testTag("next_student_button"),
+            .then(gestureModifier)
+            .testTag(testTag),
         shape = RoundedCornerShape(18.dp),
-        color = MaterialTheme.colorScheme.primary,
-        shadowElevation = 2.dp
+        color = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary.copy(alpha = 0.65f),
+        shadowElevation = if (enabled) 2.dp else 0.dp
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -571,26 +622,8 @@ fun HoldToProceedButton(
                 )
             }
 
-            // Button label and icon
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.btn_next_student),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-                Spacer(modifier = Modifier.width(12.dp))
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
+            // Button label, icon, or custom content
+            content()
 
             // Subtle progress indicator at the bottom
             if (progress.value > 0f) {

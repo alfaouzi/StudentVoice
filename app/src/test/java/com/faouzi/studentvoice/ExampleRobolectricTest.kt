@@ -273,6 +273,8 @@ class ExampleRobolectricTest {
     @Test
     fun `verify sound feedback helper executes safely without crashing`() {
         val context = ApplicationProvider.getApplicationContext<Context>()
+        // Verify completion sound volume is increased near maximum (90/100)
+        assertEquals(90, SoundFeedbackHelper.DEFAULT_VOLUME)
         // Should execute gracefully without throwing an exception even in test JVM without audio output
         SoundFeedbackHelper.playCompletionSound(context)
         SoundFeedbackHelper.playCompletionSound()
@@ -466,5 +468,57 @@ class ExampleRobolectricTest {
         assertEquals(42L, successViewModel.surveyState.value.savedSurveyId)
 
         db.close()
+    }
+
+    @Test
+    fun `verify hold to proceed button strings and labels`() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val nextStudentText = context.getString(R.string.btn_next_student)
+        val showResultsText = context.getString(R.string.btn_show_results)
+        val holdHintTextEn = context.getString(R.string.hold_to_proceed_hint)
+
+        assertEquals("التلميذ التالي", nextStudentText)
+        assertEquals("عرض النتائج", showResultsText)
+        assertEquals("Press and hold to proceed", holdHintTextEn)
+
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale.forLanguageTag("ar"))
+        val arContext = context.createConfigurationContext(config)
+        val holdHintTextAr = arContext.getString(R.string.hold_to_proceed_hint)
+        assertEquals("اضغط مطولاً للمتابعة", holdHintTextAr)
+    }
+
+    @Test
+    fun `verify how to use and support app strings and workflow points`() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale.forLanguageTag("ar"))
+        val arContext = context.createConfigurationContext(config)
+
+        // Buttons
+        assertEquals("كيفية الاستخدام", arContext.getString(R.string.btn_how_to_use))
+        assertEquals("دعم التطبيق", arContext.getString(R.string.btn_support_app))
+
+        // How to use workflow points
+        val step1 = arContext.getString(R.string.how_to_use_step1_desc)
+        val step2 = arContext.getString(R.string.how_to_use_step2_desc)
+        val step3 = arContext.getString(R.string.how_to_use_step3_desc)
+        val step4 = arContext.getString(R.string.how_to_use_step4_desc)
+        val step5 = arContext.getString(R.string.how_to_use_step5_desc)
+        val step6 = arContext.getString(R.string.how_to_use_step6_desc)
+
+        assertTrue(step1.contains("المفتش يطرح السؤال"))
+        assertTrue(step2.contains("يمسك التلميذ الهاتف"))
+        assertTrue(step3.contains("التلميذ التالي"))
+        assertTrue(step4.contains("عشوائيًا"))
+        assertTrue(step5.contains("الضغط المستمر"))
+        assertTrue(step6.contains("النتائج الإجمالية"))
+
+        // Support app strings
+        val supportDesc = arContext.getString(R.string.support_app_desc)
+        assertTrue(supportDesc.contains("Google Play"))
+        assertTrue(supportDesc.contains("مشاركة التطبيق"))
+        assertEquals("تقييم التطبيق", arContext.getString(R.string.btn_rate_app))
+        assertEquals("مشاركة التطبيق", arContext.getString(R.string.btn_share_app))
     }
 }

@@ -6,15 +6,21 @@ import android.media.ToneGenerator
 
 object SoundFeedbackHelper {
     /**
-     * Plays one short, gentle beep (approx 120ms) at a comfortable low volume
+     * Default volume level (near maximum: 90 out of 100) for the completion notification tone,
+     * ensuring it is clearly audible at a normal phone listening level while remaining pleasant.
+     */
+    const val DEFAULT_VOLUME = 90
+
+    /**
+     * Plays one short, gentle beep (approx 120ms) at an audible volume level (90/100)
      * when a student finishes answering the final question.
      * Uses Android's built-in ToneGenerator.
      * Fails silently and gracefully if the device is muted or sound is unavailable.
      */
-    fun playCompletionSound(context: Context? = null) {
+    fun playCompletionSound(context: Context? = null, volume: Int = DEFAULT_VOLUME) {
         try {
-            // Low, comfortable volume (40 out of 100)
-            val toneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 40)
+            // Increased from 40 to 90 (out of 100) so it is clearly audible at normal phone listening levels
+            val toneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, volume.coerceIn(0, 100))
             // TONE_PROP_BEEP: standard gentle beep, 120ms duration (approx 100–150ms)
             toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, 120)
             val releaseThread = Thread {

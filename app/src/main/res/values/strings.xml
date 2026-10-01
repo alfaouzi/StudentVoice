@@ -84,4 +84,33 @@
     <string name="offline_desc">التطبيق يعمل محلياً بالكامل على جهازك دون الحاجة إلى أي اتصال بالإنترنت أو إنشاء حسابات.</string>
     <string name="version_title">الإصدار</string>
     <string name="version_value">1.1.0</string>
+
+    <!-- How to Use Dialog -->
+    <string name="btn_how_to_use">كيفية الاستخدام</string>
+    <string name="how_to_use_title">كيفية الاستخدام</string>
+    <string name="how_to_use_intro">صُمم التطبيق ليتيح لكل تلميذ الإجابة بمفرده بسرية تامة، ثم تسليم الهاتف للتلميذ التالي وفق سير العمل التالي:</string>
+    <string name="how_to_use_step1_title">1. طرح السؤال على التلاميذ</string>
+    <string name="how_to_use_step1_desc">المفتش يطرح السؤال على التلاميذ ويوضحه لهم في القسم.</string>
+    <string name="how_to_use_step2_title">2. إجابة التلميذ الفردية</string>
+    <string name="how_to_use_step2_desc">يمسك التلميذ الهاتف بمفرده ويختار إجابته بسرية تامة.</string>
+    <string name="how_to_use_step3_title">3. الانتقال إلى التلميذ التالي</string>
+    <string name="how_to_use_step3_desc">بعد الإجابة، تظهر شاشة تنبيه لتسليم الهاتف لينتقل إلى التلميذ التالي.</string>
+    <string name="how_to_use_step4_title">4. ترتيب عشوائي للأزرار</string>
+    <string name="how_to_use_step4_desc">ترتيب أزرار الإجابات يتغير عشوائيًا بين التلاميذ لحماية خصوصية الاختيار ومنع التأثر بالموضع.</string>
+    <string name="how_to_use_step5_title">5. الضغط المستمر للمفتش</string>
+    <string name="how_to_use_step5_desc">يمكن للمفتش استخدام الضغط المستمر (لمدة ثانية واحدة) على زر «التلميذ التالي» للمتابعة، وعلى زر «عرض النتائج» لفتح شاشة النتائج، منعًا لأي نقر غير مقصود من التلاميذ.</string>
+    <string name="how_to_use_step6_title">6. عرض النتائج الإجمالية</string>
+    <string name="how_to_use_step6_desc">بعد انتهاء الاستطلاع، يمكن للمفتش عرض النتائج الإجمالية للسؤال والنسب المئوية المحسوبة دون كشف هوية أي تلميذ.</string>
+    <string name="dialog_ok">حسنًا، فهمت</string>
+
+    <!-- Support App Dialog -->
+    <string name="btn_support_app">دعم التطبيق</string>
+    <string name="support_app_title">دعم التطبيق</string>
+    <string name="support_app_desc">إذا أعجبك تطبيق «صوت التلميذ»، يمكنك دعمه من خلال:\n⭐ تقييم التطبيق على Google Play\n📤 مشاركة التطبيق مع من قد يستفيد منه\n\nدعمك يساعد على وصول التطبيق إلى المزيد من المهتمين بتحسين صوت التلميذ في المدرسة.</string>
+    <string name="support_app_clarification">الدعم هدفه نشر الفائدة ومساعدة المهتمين بالتربية والتعليم، ولا يتطلب أي دفع أو اشتراك أو تبرع مالي.</string>
+    <string name="btn_rate_app">تقييم التطبيق</string>
+    <string name="btn_share_app">مشاركة التطبيق</string>
+    <string name="share_app_text">تطبيق «صوت التلميذ» - أداة للمفتش التربوي لرصد آراء وتفاعل التلاميذ بسرية وسهولة:\nhttps://play.google.com/store/apps/details?id=%1$s</string>
+    <string name="share_chooser_title">مشاركة تطبيق صوت التلميذ</string>
+    <string name="dialog_close">إغلاق</string>
 </resources>

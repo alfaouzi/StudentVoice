@@ -6,4 +6,12 @@
     <string name="option_percentage_format">- %1$s: %2$d%%</string>
     <string name="percentage_only_format">%1$d%%</string>
     <string name="hold_to_proceed_hint">Press and hold to proceed</string>
+    <string name="btn_how_to_use">كيفية الاستخدام</string>
+    <string name="btn_support_app">دعم التطبيق</string>
+    <string name="how_to_use_title">كيفية الاستخدام</string>
+    <string name="support_app_title">دعم التطبيق</string>
+    <string name="btn_rate_app">تقييم التطبيق</string>
+    <string name="btn_share_app">مشاركة التطبيق</string>
+    <string name="dialog_ok">حسنًا، فهمت</string>
+    <string name="dialog_close">إغلاق</string>
 </resources>
