@@ -214,7 +214,7 @@ fun ResultsScreen(
             // Section Header
             item {
                 Text(
-                    text = "نتائج الأسئلة (بيانات تجميعية)",
+                    text = "نتائج الأسئلة (مؤشرات مجمعة)",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground,

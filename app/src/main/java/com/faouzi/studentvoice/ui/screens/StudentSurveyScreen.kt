@@ -300,7 +300,7 @@ private fun StudentAnsweringContent(
 
 /**
  * Screen shown right after an individual student answers the last question.
- * Prompts the student to return the phone to the inspector.
+ * Prompts the student to hand the phone to the survey conductor.
  */
 @Composable
 private fun StudentCompletedHandoverContent(
@@ -374,7 +374,7 @@ private fun StudentCompletedHandoverContent(
             )
         }
 
-        // Bottom: Next Student Button (Inspector controlled: require ~1s long press)
+        // Bottom: Next Student Button (Require ~1s long press to prevent accidental transition)
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -462,7 +462,7 @@ private fun SurveyFinishedContent(
             )
         }
 
-        // Bottom: Show Results Button (Inspector controlled: require ~1s long press)
+        // Bottom: Show Results Button (Require ~1s long press to prevent premature display)
         var resultsTriggered by remember { mutableStateOf(false) }
 
         Column(

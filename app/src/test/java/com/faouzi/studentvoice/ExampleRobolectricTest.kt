@@ -507,12 +507,21 @@ class ExampleRobolectricTest {
         val step5 = arContext.getString(R.string.how_to_use_step5_desc)
         val step6 = arContext.getString(R.string.how_to_use_step6_desc)
 
-        assertTrue(step1.contains("المفتش يطرح السؤال"))
-        assertTrue(step2.contains("يمسك التلميذ الهاتف"))
-        assertTrue(step3.contains("التلميذ التالي"))
-        assertTrue(step4.contains("عشوائيًا"))
-        assertTrue(step5.contains("الضغط المستمر"))
-        assertTrue(step6.contains("النتائج الإجمالية"))
+        assertTrue(step1.contains("أنشئ استطلاعًا"))
+        assertTrue(step2.contains("الهاتف إلى التلاميذ"))
+        assertTrue(step3.contains("يجيب كل تلميذ"))
+        assertTrue(step4.contains("التلميذ التالي") && step4.contains("مستمرًا"))
+        assertTrue(step5.contains("عرض النتائج") && step5.contains("مستمرًا"))
+        assertTrue(step6.contains("مجمعة"))
+
+        // Handover instruction & privacy wording checks
+        val handover = arContext.getString(R.string.handover_instruction)
+        assertEquals("يُرجى تسليم الهاتف للقائم على الاستطلاع.", handover)
+        assertFalse(handover.contains("للمفتش"))
+
+        val aboutApp = arContext.getString(R.string.about_app_desc)
+        assertTrue(aboutApp.contains("الممارسة التربوية"))
+        assertFalse(aboutApp.contains("لمفتشي التعليم"))
 
         // Support app strings
         val supportDesc = arContext.getString(R.string.support_app_desc)

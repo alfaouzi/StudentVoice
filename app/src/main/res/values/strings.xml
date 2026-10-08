@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">صوت التلميذ</string>
-    <string name="app_subtitle">استطلاع آراء التلاميذ بطريقة بسيطة وسرية</string>
+    <string name="app_subtitle">استطلاع آراء التلاميذ حول تجربة التعلم لدعم الممارسة التربوية</string>
     
     <!-- Home Screen -->
     <string name="btn_new_survey">استطلاع جديد</string>
     <string name="btn_previous_surveys">الاستطلاعات السابقة</string>
     <string name="btn_settings">معلومات التطبيق</string>
-    <string name="privacy_guarantee_badge">لا يتم تسجيل هوية التلميذ، وتُحفظ النتائج على شكل بيانات تجميعية فقط</string>
+    <string name="privacy_guarantee_badge">تُعرض النتائج بصورة مجمعة، ولا تُسجل هوية التلميذ أو تُعرض نتائج فردية</string>
     
     <!-- Setup Screen -->
     <string name="setup_title">إعداد استطلاع جديد</string>
@@ -16,7 +16,7 @@
     <string name="label_student_count">عدد التلاميذ *</string>
     <string name="hint_student_count">أدخل عدد التلاميذ (مثال: 25)</string>
     <string name="select_questions_title">اختيار الأسئلة</string>
-    <string name="select_questions_desc">حدد الأسئلة التي سيجيب عليها التلاميذ</string>
+    <string name="select_questions_desc">حدد الأسئلة المراد استطلاع تجربة التعلم حولها</string>
     <string name="btn_start_survey">بدء الاستطلاع</string>
     <string name="error_invalid_student_count">يرجى إدخال عدد صحيح موجب من التلاميذ أكبر من صفر</string>
     <string name="error_no_question_selected">يرجى اختيار سؤال واحد على الأقل للمتابعة</string>
@@ -37,11 +37,11 @@
     <string name="answer_yes">نعم</string>
     <string name="answer_maybe">إلى حد ما</string>
     <string name="answer_no">لا</string>
-    <string name="survey_privacy_notice">لا يتم تسجيل هوية التلميذ أو إجاباته على حدة، وتُحفظ النتائج كبيانات تجميعية فقط</string>
+    <string name="survey_privacy_notice">تُعرض النتائج بصورة مجمعة، ولا تُعرض نتائج فردية لكل تلميذ</string>
 
     <!-- Student Handover Screen -->
     <string name="thank_you">شكرًا لك</string>
-    <string name="handover_instruction">أعطِ الهاتف للمفتش.</string>
+    <string name="handover_instruction">يُرجى تسليم الهاتف للقائم على الاستطلاع.</string>
     <string name="btn_next_student">التلميذ التالي</string>
     <string name="hold_to_proceed_hint">اضغط مطولاً للمتابعة</string>
     <string name="survey_finished">انتهى الاستطلاع</string>
@@ -67,7 +67,7 @@
     <!-- Previous Surveys Screen -->
     <string name="previous_surveys_title">الاستطلاعات السابقة</string>
     <string name="empty_surveys">لا توجد استطلاعات سابقة بعد</string>
-    <string name="empty_surveys_desc">عند إتمام أي استطلاع، سيتم حفظ نتائجه التجميعية هنا للرجوع إليها لاحقاً.</string>
+    <string name="empty_surveys_desc">عند إتمام أي استطلاع، تُحفظ نتائجه المجمعة هنا للرجوع إليها والاستفادة منها في تطوير الممارسة التربوية.</string>
     <string name="btn_delete">حذف</string>
     <string name="delete_confirm_title">حذف الاستطلاع</string>
     <string name="delete_confirm_desc">هل أنت متأكد من حذف نتائج هذا الاستطلاع؟ لا يمكن التراجع عن هذا الإجراء.</string>
@@ -77,9 +77,9 @@
     <!-- Settings Screen -->
     <string name="settings_title">معلومات التطبيق</string>
     <string name="about_app_title">حول التطبيق</string>
-    <string name="about_app_desc">صوت التلميذ هو أداة تربوية مبسطة ومستقلة لمفتشي التعليم لجمع آراء التلاميذ حول الأستاذ دون تسجيل هوياتهم، وتُحفظ النتائج كبيانات تجميعية فقط دون أي تأثير خارجي.</string>
-    <string name="privacy_title">خصوصية إجابات التلاميذ</string>
-    <string name="privacy_desc">لا يتم تسجيل هوية التلميذ أو إجابات كل تلميذ على حدة، وتُحفظ النتائج على شكل بيانات تجميعية فقط.</string>
+    <string name="about_app_desc">«صوت التلميذ» أداة تربوية ميسرة تساعد المربين والفاعلين التربويين على الاستماع إلى آراء التلاميذ حول تجربتهم التعليمية، وتحويل استجاباتهم إلى مؤشرات مجمعة واضحة تدعم تحسين الممارسة التربوية، مع حفظ النتائج بصورة مجمعة ودون تسجيل هويات التلاميذ.</string>
+    <string name="privacy_title">خصوصية المشاركة</string>
+    <string name="privacy_desc">تُعرض النتائج بصورة مجمعة، ولا تُعرض نتائج فردية لكل تلميذ، كما لا يحتاج التلميذ إلى إنشاء حساب للإجابة.</string>
     <string name="offline_title">يعمل بدون إنترنت</string>
     <string name="offline_desc">التطبيق يعمل محلياً بالكامل على جهازك دون الحاجة إلى أي اتصال بالإنترنت أو إنشاء حسابات.</string>
     <string name="version_title">الإصدار</string>
@@ -88,29 +88,29 @@
     <!-- How to Use Dialog -->
     <string name="btn_how_to_use">كيفية الاستخدام</string>
     <string name="how_to_use_title">كيفية الاستخدام</string>
-    <string name="how_to_use_intro">صُمم التطبيق ليتيح لكل تلميذ الإجابة بمفرده بسرية تامة، ثم تسليم الهاتف للتلميذ التالي وفق سير العمل التالي:</string>
-    <string name="how_to_use_step1_title">1. طرح السؤال على التلاميذ</string>
-    <string name="how_to_use_step1_desc">المفتش يطرح السؤال على التلاميذ ويوضحه لهم في القسم.</string>
-    <string name="how_to_use_step2_title">2. إجابة التلميذ الفردية</string>
-    <string name="how_to_use_step2_desc">يمسك التلميذ الهاتف بمفرده ويختار إجابته بسرية تامة.</string>
-    <string name="how_to_use_step3_title">3. الانتقال إلى التلميذ التالي</string>
-    <string name="how_to_use_step3_desc">بعد الإجابة، تظهر شاشة تنبيه لتسليم الهاتف لينتقل إلى التلميذ التالي.</string>
-    <string name="how_to_use_step4_title">4. ترتيب عشوائي للأزرار</string>
-    <string name="how_to_use_step4_desc">ترتيب أزرار الإجابات يتغير عشوائيًا بين التلاميذ لحماية خصوصية الاختيار ومنع التأثر بالموضع.</string>
-    <string name="how_to_use_step5_title">5. الضغط المستمر للمفتش</string>
-    <string name="how_to_use_step5_desc">يمكن للمفتش استخدام الضغط المستمر (لمدة ثانية واحدة) على زر «التلميذ التالي» للمتابعة، وعلى زر «عرض النتائج» لفتح شاشة النتائج، منعًا لأي نقر غير مقصود من التلاميذ.</string>
-    <string name="how_to_use_step6_title">6. عرض النتائج الإجمالية</string>
-    <string name="how_to_use_step6_desc">بعد انتهاء الاستطلاع، يمكن للمفتش عرض النتائج الإجمالية للسؤال والنسب المئوية المحسوبة دون كشف هوية أي تلميذ.</string>
+    <string name="how_to_use_intro">صُمم التطبيق لتمكين المربين من استطلاع تجربة التعلم لدى التلاميذ ومشاركتهم بطريقة ميسرة، وفق الخطوات التالية:</string>
+    <string name="how_to_use_step1_title">1. إنشاء الاستطلاع وإضافة الأسئلة</string>
+    <string name="how_to_use_step1_desc">أنشئ استطلاعًا جديدًا وأضف الأسئلة التي تريد معرفة رأي التلاميذ حولها وتجربتهم التعليمية.</string>
+    <string name="how_to_use_step2_title">2. تمرير الهاتف إلى التلاميذ</string>
+    <string name="how_to_use_step2_desc">يُمرَّر الهاتف إلى التلاميذ واحدًا تلو الآخر للإجابة بصورة فردية ومستقلة دون الحاجة لإنشاء حساب.</string>
+    <string name="how_to_use_step3_title">3. إجابة كل تلميذ عن الأسئلة</string>
+    <string name="how_to_use_step3_desc">يجيب كل تلميذ عن الأسئلة، ويتم تغيير ترتيب أزرار الإجابة بين التلاميذ لتقليل احتمال استنتاج الإجابة من موضع الزر.</string>
+    <string name="how_to_use_step4_title">4. زر «التلميذ التالي» بالضغط المستمر</string>
+    <string name="how_to_use_step4_desc">يتطلب زر «التلميذ التالي» ضغطًا مستمرًا حتى يكتمل شريط التقدم، لتفادي الانتقال غير المقصود بين التلاميذ أثناء تسليم الهاتف.</string>
+    <string name="how_to_use_step5_title">5. زر «عرض النتائج» بالضغط المستمر</string>
+    <string name="how_to_use_step5_desc">بعد انتهاء جميع الإجابات، يتطلب زر «عرض النتائج» ضغطًا مستمرًا حتى يكتمل شريط التقدم، لمنع إظهار النتائج بصورة غير مقصودة قبل الأوان.</string>
+    <string name="how_to_use_step6_title">6. عرض النتائج بصورة مجمعة</string>
+    <string name="how_to_use_step6_desc">تُعرض النتائج بصورة مجمعة لكل سؤال مع النسب المئوية، لدعم تحسين الممارسة التربوية دون عرض نتائج فردية لكل تلميذ.</string>
     <string name="dialog_ok">حسنًا، فهمت</string>
 
     <!-- Support App Dialog -->
     <string name="btn_support_app">دعم التطبيق</string>
     <string name="support_app_title">دعم التطبيق</string>
-    <string name="support_app_desc">إذا أعجبك تطبيق «صوت التلميذ»، يمكنك دعمه من خلال:\n⭐ تقييم التطبيق على Google Play\n📤 مشاركة التطبيق مع من قد يستفيد منه\n\nدعمك يساعد على وصول التطبيق إلى المزيد من المهتمين بتحسين صوت التلميذ في المدرسة.</string>
-    <string name="support_app_clarification">الدعم هدفه نشر الفائدة ومساعدة المهتمين بالتربية والتعليم، ولا يتطلب أي دفع أو اشتراك أو تبرع مالي.</string>
+    <string name="support_app_desc">إذا ساعدك تطبيق «صوت التلميذ» في استطلاع تجربة التعلم، يمكنك دعمه اختياريًا من خلال:\n⭐ تقييم التطبيق على Google Play\n📤 مشاركة التطبيق مع الزملاء والمهتمين بالتربية والتعليم\n\nدعمك يسهم في وصول التطبيق إلى المزيد من المربين لدعم صوت التلميذ وتحسين الممارسة التربوية.</string>
+    <string name="support_app_clarification">دعم التطبيق تطوعي واختياري تمامًا، وكافة الوظائف التربوية متاحة بالكامل دون أي مقابل أو اشتراك.</string>
     <string name="btn_rate_app">تقييم التطبيق</string>
     <string name="btn_share_app">مشاركة التطبيق</string>
-    <string name="share_app_text">تطبيق «صوت التلميذ» - أداة للمفتش التربوي لرصد آراء وتفاعل التلاميذ بسرية وسهولة:\nhttps://play.google.com/store/apps/details?id=%1$s</string>
+    <string name="share_app_text">تطبيق «صوت التلميذ» - أداة تربوية لاستطلاع آراء التلاميذ حول تجربة التعلم ودعم الممارسة التربوية:\nhttps://play.google.com/store/apps/details?id=%1$s</string>
     <string name="share_chooser_title">مشاركة تطبيق صوت التلميذ</string>
     <string name="dialog_close">إغلاق</string>
 </resources>

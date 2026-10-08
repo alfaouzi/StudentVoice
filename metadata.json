@@ -1,6 +1,8 @@
 {
   "name": "صوت التلميذ",
-  "description": "صوت التلميذ - استطلاع آراء التلاميذ بطريقة بسيطة وسرية. أداة خاصة للمفتشين لجمع التقييمات التجميعية دون تسجيل أي بيانات شخصية.",
+  "description": "صوت التلميذ - أداة تربوية لاستطلاع آراء التلاميذ حول تجربة التعلم وتحويلها إلى مؤشرات مجمعة تدعم تحسين الممارسة التربوية.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
