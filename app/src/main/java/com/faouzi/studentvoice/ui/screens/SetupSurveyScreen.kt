@@ -86,7 +86,8 @@ fun SetupSurveyScreen(
         stringResource(R.string.default_q2),
         stringResource(R.string.default_q3),
         stringResource(R.string.default_q4),
-        stringResource(R.string.default_q5)
+        stringResource(R.string.default_q5),
+        stringResource(R.string.default_q6)
     )
 
     val questionsList = remember {

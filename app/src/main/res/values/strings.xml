@@ -10,13 +10,13 @@
     
     <!-- Setup Screen -->
     <string name="setup_title">إعداد استطلاع جديد</string>
-    <string name="label_teacher_name">اسم المعلم (اختياري)</string>
+    <string name="label_teacher_name">اسم الأستاذ (اختياري)</string>
     <string name="label_class_name">القسم (اختياري)</string>
     <string name="label_subject">المادة (اختياري)</string>
     <string name="label_student_count">عدد التلاميذ *</string>
     <string name="hint_student_count">أدخل عدد التلاميذ (مثال: 25)</string>
     <string name="select_questions_title">اختيار الأسئلة</string>
-    <string name="select_questions_desc">حدد الأسئلة المراد استطلاع تجربة التعلم حولها</string>
+    <string name="select_questions_desc">اختر الأسئلة المناسبة لفهم تجربة التلاميذ التعليمية.</string>
     <string name="btn_start_survey">بدء الاستطلاع</string>
     <string name="error_invalid_student_count">يرجى إدخال عدد صحيح موجب من التلاميذ أكبر من صفر</string>
     <string name="error_no_question_selected">يرجى اختيار سؤال واحد على الأقل للمتابعة</string>
@@ -25,11 +25,12 @@
     <string name="btn_add">إضافة</string>
 
     <!-- Default Questions -->
-    <string name="default_q1">هل أنت راضٍ عن معلمك؟</string>
-    <string name="default_q2">هل يشرح المعلم الدرس بوضوح؟</string>
-    <string name="default_q3">هل يعاملك المعلم باحترام؟</string>
-    <string name="default_q4">هل يسمح لك المعلم بطرح الأسئلة؟</string>
-    <string name="default_q5">هل يعامل المعلم التلاميذ بعدل؟</string>
+    <string name="default_q1">هل تشعر أنك تفهم ما يُقدَّم لك في القسم؟</string>
+    <string name="default_q2">هل تجد فرصة لطرح أسئلتك عندما تحتاج إلى توضيح؟</string>
+    <string name="default_q3">هل تُتاح لك فرص كافية للمشاركة في القسم؟</string>
+    <string name="default_q4">هل تشعر بأنك تُعامل بإنصاف داخل القسم؟</string>
+    <string name="default_q5">هل تساعدك الأنشطة المقدمة على فهم ما تتعلمه؟</string>
+    <string name="default_q6">هل تشعر بالتشجيع على تحسين مستواك الدراسي؟</string>
 
     <!-- Survey Execution Screen -->
     <string name="student_session_format">التلميذ %1$d من %2$d</string>
@@ -50,7 +51,7 @@
 
     <!-- Results Screen -->
     <string name="results_title">نتائج الاستطلاع</string>
-    <string name="teacher_label">المعلم:</string>
+    <string name="teacher_label">الأستاذ:</string>
     <string name="class_label">القسم:</string>
     <string name="subject_label">المادة:</string>
     <string name="participants_label">عدد المشاركين:</string>

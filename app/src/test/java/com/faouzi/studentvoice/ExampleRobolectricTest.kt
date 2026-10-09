@@ -530,4 +530,30 @@ class ExampleRobolectricTest {
         assertEquals("تقييم التطبيق", arContext.getString(R.string.btn_rate_app))
         assertEquals("مشاركة التطبيق", arContext.getString(R.string.btn_share_app))
     }
+
+    @Test
+    fun `verify setup screen field labels and six predefined questions`() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale.forLanguageTag("ar"))
+        val arContext = context.createConfigurationContext(config)
+
+        // Field labels
+        assertEquals("اسم الأستاذ (اختياري)", arContext.getString(R.string.label_teacher_name))
+        assertEquals("القسم (اختياري)", arContext.getString(R.string.label_class_name))
+        assertEquals("المادة (اختياري)", arContext.getString(R.string.label_subject))
+        assertEquals("عدد التلاميذ *", arContext.getString(R.string.label_student_count))
+
+        // Questions selection header & description
+        assertEquals("اختيار الأسئلة", arContext.getString(R.string.select_questions_title))
+        assertEquals("اختر الأسئلة المناسبة لفهم تجربة التلاميذ التعليمية.", arContext.getString(R.string.select_questions_desc))
+
+        // Six neutral predefined questions
+        assertEquals("هل تشعر أنك تفهم ما يُقدَّم لك في القسم؟", arContext.getString(R.string.default_q1))
+        assertEquals("هل تجد فرصة لطرح أسئلتك عندما تحتاج إلى توضيح؟", arContext.getString(R.string.default_q2))
+        assertEquals("هل تُتاح لك فرص كافية للمشاركة في القسم؟", arContext.getString(R.string.default_q3))
+        assertEquals("هل تشعر بأنك تُعامل بإنصاف داخل القسم؟", arContext.getString(R.string.default_q4))
+        assertEquals("هل تساعدك الأنشطة المقدمة على فهم ما تتعلمه؟", arContext.getString(R.string.default_q5))
+        assertEquals("هل تشعر بالتشجيع على تحسين مستواك الدراسي؟", arContext.getString(R.string.default_q6))
+    }
 }
